@@ -1,0 +1,22 @@
+<form action="/upload" method="post" enctype="multipart/form-data">
+  <label for="file">Select a file:</label>
+  <input type="file" id="file" name="file"><br><br>
+  <input type="submit" value="Upload">
+</form>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // generate unique ID for file
+  $id = uniqid();
+
+  // save file to uploads directory with unique ID as filename
+  move_uploaded_file($_FILES['file']['tmp_name'], "uploads/$id");
+
+  // generate share link for file
+  $share_link = "https://{YOUR_DOMAIN}/uploads/$id";
+
+  // print share link
+  echo "<p>Share this link:</p>";
+  echo "<a href=\"$share_link\">$share_link</a>";
+}
+?>
